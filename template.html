@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+	<head>
+		<meta charset='UTF-8'/>
+		<meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+		<meta content='#603cba' name='msapplication-TileColor'/>
+		<meta content='favicon/browserconfig.xml' name='msapplication-config'/>
+		<meta content='#ffffff' name='theme-color'/>
+		<meta content='index, follow' name='robots'/>
+		<meta content='https://ardev95.github.io/movies/img/home.png' property='twitter:image:src'/>
+		<link href='https://ardev95.github.io/movies/img/5.png' rel='apple-touch-icon' sizes='180x180'/>
+		<link href='https://ardev95.github.io/movies/img/5.png' rel='icon' sizes='32x32' type='image/png'/>
+		<link href='https://ardev95.github.io/movies/img/5.png' rel='icon' sizes='16x16' type='image/png'/>
+		<link href='https://ardev95.github.io/movies/favicon/site.webmanifest' rel='manifest'/>
+		<link color='#5bbad5' href='https://ardev95.github.io/movies/favicon/safari-pinned-tab.svg' rel='mask-icon'/>
+		<link href='https://ardev95.github.io/movies/favicon/favicon.ico' rel='shortcut icon'/>
+		<link href='https://ardev95.github.io/movies/css/style.css' rel='stylesheet'/>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js' type='text/javascript'/>
+		<b:if cond='data:blog.isMobile'><b:else/></b:if>
+		<b:skin><![CDATA[#loading-spinner {width: 50px;height: 50px;border: 5px solid #f3f3f3;border-top: 5px solid #3498db;border-radius: 50%;animation: spin 1s linear infinite;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);}.no-click {pointer-events: all; }#signup-popup pointer-events: all; }.no-click::before {content: "";position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 999;}@keyframes spin {0% { transform: rotate(0deg); }100% { transform: rotate(360deg); }iframe::-webkit-scrollbar {display: none;}]]></b:skin>	
+
+	</head>
+	<body>
+		<b:section class='' id='Movies HD Free'/><b:if cond='data:blog.url'><b:include data='blog' name='all'/></b:if><b:if cond='data:blog.title'><script>let blogTitle = &quot;<data:blog.title/>&quot;;</script></b:if>
+
+		<script>
+			window.onload = function() {
+			  const dataContainer = document.getElementById(&#39;container&#39;);
+			  const urlParams = new URLSearchParams(window.location.search);
+			  const movid = urlParams.get(&#39;movie&#39;) || &#39;&#39;;
+			  const tvid = urlParams.get(&#39;tv&#39;) || &#39;&#39;;
+			  const season = urlParams.get(&#39;season&#39;) || &#39;&#39;;
+			  const episode = urlParams.get(&#39;episode&#39;) || &#39;&#39;;
+			  const type = urlParams.get(&#39;type&#39;) || &#39;&#39;;
+			  const page = urlParams.get(&#39;page&#39;) || 1;
+			  const info = urlParams.get(&#39;p&#39;) || &#39;&#39;;
+			  const search = urlParams.get(&#39;search&#39;) || &#39;&#39;;
+			  
+			  if (!dataContainer) {
+				console.error(&quot;Element with id &#39;container&#39; not found.&quot;);
+				return;
+			  }
+
+			  let apiUrl = `https://shotlitv.com/api.php`;
+			  const apiKey = `https://shotlitv.com/api.php`;
+			  const blogspotBaseUrl = `${window.location.hostname}.blogspot.com`;
+			  
+			  
+			  if (movid) {
+				apiUrl += `?movie=${movid}`;
+			  } else if (tvid) {
+				apiUrl += `?tv=${tvid}`;
+				if (season) {
+				  apiUrl += `&amp;season=${season}`;
+				}
+				if (episode) {
+				  apiUrl += `&amp;episode=${episode}`;
+				}
+			  } else if (search) {
+				apiUrl += `?search=${search}&amp;page=${page}`;
+			} else if (type) {
+				switch (type) {
+				  case &#39;movies&#39;:
+					apiUrl += `?type=movie/now_playing&amp;page=${page}`;
+					break;
+				  case &#39;trending_movies&#39;:
+					apiUrl += `?type=movie/popular&amp;page=${page}`;
+					break;
+				  case &#39;top_rated_movies&#39;:
+					apiUrl += `?type=movie/top_rated&amp;page=${page}`;
+					break;
+				  case &#39;tvshow&#39;:
+					apiUrl += `?type=tv/airing_today&amp;page=${page}`;
+					break;
+				  case &#39;trending_tv&#39;:
+					apiUrl += `?type=tv/popular&amp;page=${page}`;
+					break;
+				  case &#39;top_rated_tv&#39;:
+					apiUrl += `?type=tv/top_rated&amp;page=${page}`;
+					break;
+				  default:
+					console.error(&#39;Invalid category type provided.&#39;, type);
+					return;
+				}
+			  } else if (info) {
+				  switch (info) {
+					case &#39;dmca&#39;:
+					  dataContainer.innerHTML = `<title>DMCA - ${blogTitle}</title><meta content='DMCA Page.' name='description'/><meta content='${blogTitle}- DMCA' itemprop='name'/><meta content='DMCA Page.' itemprop='description'/><div style='color:#000;background:#fff;padding: 20px'><h1 style='text-align: center; font-size:32px; font-weight: 400;'>DMCA</h1><p>Please Be informed That we don&#8217;t Host any of these videos embedded here. All videos found on our site are found freely available around the web, Our mission here, is to organize those videos and to make your search for the latest movies/series easier. We simply link to the video that is already hosted on other web sites. If you are concerned about copyrighted material appearing in this website, we suggest that you contact the web site that is hosting the video and have it removed from there. Once the content is removed from the website hosting your content, it will automatically be removed from ${blogspotBaseUrl} We are not affiliated nor claim to be affiliated with any of the owners of videos/streams played on our site.</p><p>All content is copyright of their respective owners. We urge all copyright owners, to recognize that links contained within this site are located somewhere else on the web. The embedded link points to the location of the video on the web. Please direct all copyright infringement issues to the companies that host these files (2embed,vidcloud, Doodstream, playerwe, etc.).</p><p>It is our policy to respond to clear notices of alleged copyright infringement. This page outlines the information required to submit these notices and allows online submission for the fastest response</p><p>No copyright infringement is intended nor implied</p><p>${blogspotBaseUrl} simply acts as a search engine, is not responsible for the content of external websites. Please ensure before sending an A/V removal request that the media in question is actually hosted by ${blogspotBaseUrl}. All the video content found on ${blogspotBaseUrl} is not hosted on our servers nor is created or uploaded by us.</p><p>The most effective way of protecting your rights is to seek removal from the host that is responsible for the content. This in turn, will remove the content from ${blogspotBaseUrl} and any other search engines that may have indexed the content.</p><p><strong>Streams Widget</strong></p><p>We do not host or upload any streams. We are not responsible for the accuracy, compliance, copyright, legality, decency, or any other aspect of the content of such streams. We only contain links to other websites on the Internet. If you have any legal issues please contact the appropriate media file owners / hosters or links provider.</p><p>By visiting/using this web site you hereby agree and understand that all channels on this site contain embedded live streams and links to original uploader. These streams come from freely available web sites on the web such as playerwe.xyz, 2embed, vidcloud and others alike. This means that ${blogspotBaseUrl} does NOT host, copies, distributes and/or sells any copyrighted content this web site may display. We are not affiliated nor claims to be affiliated with any of the owners of streams featured on this site. All content is copyright of their respective owners. We would like to urge all copyright owners to recognize that streams contained within this site are hosted and located outside of this web site&#8217;s domain name/servers ${blogspotBaseUrl}. Please direct all DMCA claims to the precise web site hosting these streams (2embed, playerwe, vidcloud, etc.). We would like to thank you for your attention and understanding of this subject.</p><p><strong>Images</strong></p><p>${blogspotBaseUrl} may use external images. The images on this website are build or gathered/extracted automatically from videos which we collect from imdb, tmdb and similar sites. We do not take credit for any of the images on our website. We give credit to the creator where ever applicable.</p><p>All products, images, logos and contents on this website are the property of their respective owners.</p></div>`;
+					  break;
+					case &#39;privacy&#39;:
+					  dataContainer.innerHTML = `<title>Privacy Policy - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='Privacy Policy Page.' name='description'/><meta content='${blogTitle}- Privacy Policy' itemprop='name'/><meta content='Privacy Policy Page.' itemprop='description'/><div style='color:#000;background:#fff;padding: 20px'><h1 style='text-align: center; font-size:32px; font-weight: 400;'>Privacy Policy</h1><h2>Who we are</h2><p>Our website address is: ${blogspotBaseUrl}</p><h2>Comments</h2><p>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor&#8217;s IP address and browser user agent string to help spam detection.</p><p>An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.</p><h2>Media</h2><p>If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.</p><h2>Cookies</h2><p>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.</p><p>If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.</p><p>When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select &#8220;Remember Me&#8221;, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.</p><p>If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.</p><h2>Embedded content from other websites</h2><p>Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.</p><p>These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.</p><h2>Who we share your data with</h2><p>If you request a password reset, your IP address will be included in the reset email.</p><h2>How long we retain your data</h2><p>If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.</p><p>For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.</p><h2>What rights you have over your data</h2><p>If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.</p><h2>Where we send your data</h2><p>Visitor comments may be checked through an automated spam detection service.</p></div>`;
+					  break;
+					case &#39;terms&#39;:
+					  dataContainer.innerHTML = `<title>Terms and Conditions - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='Terms and Conditions Page.' name='description'/><meta content='${blogTitle}- Terms and Conditions' itemprop='name'/><meta content='Terms and Conditions Page.' itemprop='description'/><div style='height:100vh; color:#000;background:#fff;padding: 20px'><h1 style='text-align: center; font-size:32px; font-weight: 400;'>Terms and Conditions</h1><p>On this page you will get information about our website Terms and Conditions. These Terms and Conditions are applied to all viewers. If you don&#8217;t agree with these Terms and Conditions you can&#8217;t access the services provided by our website.</p><h3>Links To Other Web Sites</h3><p>Our Website may have some services linked to third-party websites and services. We don&#8217;t have control over these third party services. Please check the terms and conditions provided by these websites.</p><h3>Changes</h3><p>Some time we modify our website Terms and Conditions, for improving the website. These changes are done within a few days. Our new services may have some new information related to personal data or users. Check our new Terms and Conditions when they updated.</p></div>
+					  `;
+					  break;
+					default:
+					  dataContainer.innerHTML = `<center> </center>`;
+					  console.error(&#39;Invalid info type provided.&#39;, info);
+					  return;
+				  }
+			  } else {
+				Promise.all([
+                    fetch(`${apiKey}?type=movie/popular&amp;page=${page}`).then(res =&gt; res.json()),
+                    fetch(`${apiKey}?type=tv/airing_today&amp;page=${page}`).then(res =&gt; res.json())
+                ])
+                .then(([movieData, tvData]) =&gt; {
+                    let content1 = `<h1 class='Featured widget-title'>Featured Movies <span><a class='see-all' href='?type=movies'>See all</a></span></h1> `;
+                    movieData.results.forEach(item =&gt; {content1 += `<article class='item'><div class='poster' style='height:30%;top:0;'><img alt='${item.titlemov}' src='https://image.tmdb.org/t/p/w185/${item.poster}'/><div class='rating'><i class='fa fa-star'/> ${item.vote}</div><div class='mepo'/><a href='?movie=${item.id}'><div class='see play3'/></a></div><div class='data' style='height:10%;top:0;'><h3><a href='/movies'>${item.title}</a></h3><span>${item.release}</span></div></article>`;
+                    });
+
+                    let content2 = `<h2 class='Featured widget-title'>Featured TV Shows <span><a class='see-all' href='?type=tvshow'>See all</a></span></h2> `;
+                    tvData.results.forEach(item =&gt; {content2 += `<article class='item'><div class='poster' style='height:30%;top:0;'><img alt='${item.title}' src='https://image.tmdb.org/t/p/w185/${item.poster}'/><div class='rating'><i class='fa fa-star'/> ${item.vote}</div><div class='mepo'/><a href='?tv=${item.id}'><div class='see play3'/></a></div><div class='data' style='height:10%;top:0;'><h3><a href='?tv=${item.id}'>${item.title}</a></h3><span>${item.air_date}</span></div></article>`;
+                    });
+
+                    dataContainer.innerHTML = `<title>Watch Movies and TV series online for free HD - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='Watch Movies and TV series online for free HD' name='description'/><meta content='Watch Movies and TV series online for free HD' itemprop='name'/><meta content='Watch Movies and TV series online for free HD' itemprop='description'/><div class='module'><div class='content right full'><div class='animation-2 items full'>${content1}</div><div class='animation-2 items full'>${content2}</div></div></div>`;
+                })
+                .catch(error =&gt; {
+                    dataContainer.innerHTML = `
+                        <center style='margin-top:20%;'><h1>ERROR: ${error.message}</h1></center>
+                    `;
+                });
+
+                return;
+            }
+
+			  fetch(apiUrl)
+				.then(response =&gt; response.json())
+				.then(data =&gt; {
+
+				  if (data.status === &#39;error&#39;) {
+					dataContainer.innerHTML = `<center>${data.message}</center>`;
+					return;
+				  }
+				  
+				if (movid) {
+					console.log(&#39;Data lengkap:&#39;, data);
+					Promise.all([
+						fetch(`${apiKey}?type=movie/top_rated&amp;page=1`).then(res =&gt; res.json()),
+					]).then(([movieData]) =&gt; {
+						const trendingMov = movieData.results.map(movie =&gt; `<article class='item movies'><div class='poster' style='height:30%;top:0;'><img alt='${movie.titlemov}' src='https://image.tmdb.org/t/p/w185${movie.poster}'/><div class='rating'><i class='fa fa-star'/> ${movie.vote}</div><a href='?movie=${movie.id}'><div class='see play3'/></a></div><div class='data' style='height:10%;top:0;'><h3><a href='?movie=${movie.id}'>${movie.title}</a></h3><span>${movie.release}</span></div></article>`)
+						  .join(&#39;&#39;);
+					
+					const genreNames = data.genres.map(genre =&gt; genre.name);
+					
+					dataContainer.innerHTML = `<title>${data.dynamic_title} - ${blogTitle}</title>
+<meta content='index, follow' name='robots'/><meta content='Watch ${data.title} HD free TV Show  - ${blogTitle}' name='description'/><meta content='Watch ${data.title} HD free TV Show  - ${blogTitle}' itemprop='name'/><meta content='Watch ${data.title} HD free TV Show  - ${blogTitle}' itemprop='description'/>
+					  <div class='module'>
+						<div class='content'>
+							<div class='video-info-left'>
+								<div class='content-more-js' id='rmjs-1'>
+									<div class='watch_play'>
+										<div class='play-video'>
+											<iframe allowfullscreen='true' frameborder='0' id='player' marginheight='0' marginwidth='0' referrerpolicy='origin' scrolling='no' src='${data.video}'/>
+										</div>
+										<div class='clr'/>
+									</div>
+									<div class='dst'>
+											<a data-src='https://www.youtube.com/embed/${data.trailers}' href='javascript:;' id='trailer' title='${data.title} trailer'><i class='fas fa-play-circle'/> Watch Trailer</a>
+											<a id='loading' style='display:none'>Loading...</a>
+											<a data-src='${data.video}' href='javascript:;' id='watchm' style='display:none' title='${data.title} watch now'><i class='fas fa-play-circle'/> Watch Movie</a>
+											<a href='javascript:;' id='torrent' onclick='window.open(&apos;${data.download_torrent}&apos;, &apos;_blank&apos;)' title='Download torrent ${data.title}'><i class='fas fa-download'/> Download torrent</a>
+											<a href='javascript:;' id='subtitle' onclick='window.open(&apos;${data.download_subtitle}&apos;, &apos;_blank&apos;)' title='Download Subtitle ${data.title}'><i class='fas fa-download'/> Download subtitle</a>
+									 </div>
+									<div class='clr'/>
+										<div class='clr'/>
+										<div class='rgt'>
+											<div class='rgtp'>
+												<h1>${data.title} - 2025</h1>
+												<p>${data.release}</p>
+												<ul class='genre'>${genreNames}</ul>
+												<p>${data.overview}</p>
+											</div>
+										</div>
+									</div>
+									<div class='clr'/>
+								</div>
+								<div class='video-info-right'>
+									<h2 class='widget-title'>Trending Movies</h2>
+									<div class='animation-2 items'> 
+										${trendingMov}
+									</div>
+								</div>
+							</div>
+						</div>`;
+						var trailerButton = document.getElementById(&#39;trailer&#39;);
+						var watchMovieButton = document.getElementById(&#39;watchm&#39;);
+						var player = document.getElementById(&#39;player&#39;);
+
+						if (trailerButton) {
+							trailerButton.addEventListener(&#39;click&#39;, function() {
+								var videoSrc = this.getAttribute(&#39;data-src&#39;);
+								if (player) {
+									player.setAttribute(&#39;src&#39;, videoSrc);
+									console.log(&#39;Trailer video source set to:&#39;, videoSrc);
+								}
+								
+								trailerButton.style.display = &#39;none&#39;;
+								watchMovieButton.style.display = &#39;inline-block&#39;;
+							});
+						}
+
+						if (watchMovieButton) {
+							watchMovieButton.addEventListener(&#39;click&#39;, function() {
+								var videoSrc = this.getAttribute(&#39;data-src&#39;);
+								if (player) {
+									player.setAttribute(&#39;src&#39;, videoSrc); 
+									console.log(&#39;Movie video source set to:&#39;, videoSrc);
+								}
+								
+								watchMovieButton.style.display = &#39;none&#39;;
+								trailerButton.style.display = &#39;inline-block&#39;;
+								
+							});
+						}
+						
+						})
+						.catch(error =&gt; console.error(&#39;Error fetching movie list:&#39;, error));
+				}
+				
+				else if (search) {
+					
+					let output = &quot;&quot;;
+					const itemsPerPage = 10; 
+					const currentPage = parseInt(page) || 1;
+					const totalMovies = data.data_s_mov.length;
+					const totalTvShows = data.data_tv_shows.length;
+					const totalPages = Math.ceil(Math.max(totalMovies, totalTvShows) / itemsPerPage);
+
+					const getPaginatedData = (dataArray) =&gt; {
+						const start = (currentPage - 1) * itemsPerPage;
+						return dataArray.slice(start, start + itemsPerPage);
+					};
+
+					const paginatedMovies = getPaginatedData(data.data_s_mov);
+					const paginatedTvShows = getPaginatedData(data.data_tv_shows);
+
+					if (paginatedMovies.length &gt; 0) {
+						output += `<div class='animation-2 items full arch'>`;
+						output += `<h2 class='Featured'>MOVIES</h2>`;
+						paginatedMovies.forEach(movie =&gt; {
+							output += `
+							<article class='item'>
+								<div class='poster' style='height:30%;top:0;'>
+									<img alt='${movie.title}' src='${movie.poster_path}'/>
+									<div class='rating'><i class='fa fa-star'/> ${movie.vote_average}</div>
+									<a href='?movie=${movie.idmovies}'>
+										<div class='see play3'/>
+									</a>
+								</div>
+								<div class='data' style='height:10%;top:0;'>
+									<h3><a href='?movie=${movie.idmovies}'>${movie.title}</a></h3> 
+									<span>${movie.release_date}</span>
+								</div>
+							</article>`;
+						});
+						output += `</div>`;
+					}
+
+					if (paginatedTvShows.length &gt; 0) {
+						output += `<div class='animation-2 items full arch'>`;
+						output += `<h2 class='Featured'>TV SHOWS</h2>`;
+						paginatedTvShows.forEach(tvShow =&gt; {
+							output += `
+							<article class='item'>
+								<div class='poster' style='height:30%;top:0;'>
+									<img alt='${tvShow.name}' src='${tvShow.poster_path}'/>
+									<div class='rating'><i class='fa fa-star'/> ${tvShow.vote_average}</div>
+									<a href='?tv=${tvShow.idtv}'>
+										<div class='see play3'/>
+									</a>
+								</div>
+								<div class='data' style='height:10%;top:0;'>
+									<h3><a href='?tv=${tvShow.idtv}'>${tvShow.name}</a></h3> 
+									<span>${tvShow.first_air_date}</span>
+								</div>
+							</article>`;
+						});
+						output += `</div>`;
+					}
+
+					if (!output) {
+						output = `<center>No results found.</center>`;
+					}
+
+					let paginationContent = &#39;&#39;;
+
+					if (totalPages &gt;  1) {
+						if (currentPage &gt;  1) {
+							paginationContent += `<li class='prev'><a href='?search=${search}&amp;page=${currentPage - 1}'>&lt; Previous</a></li>`;
+						}
+
+						for (let i = 1; i &lt;= Math.min(totalPages, 5); i++) {
+							const isActive = i === currentPage ? &#39;active&#39; : &#39;&#39;;
+							paginationContent += `<li class='${isActive}'><a href='?search=${search}&amp;page=${i}'>${i}</a></li>`;
+						}
+
+						if (currentPage &lt; totalPages) {
+							paginationContent += `<li class='next'><a href='?search=${search}&amp;page=${currentPage + 1}'>Next &gt;</a></li>`;
+						}
+					}
+
+					dataContainer.innerHTML = `<title>Search result ${search} - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='Search result ${search}' name='description'/><meta content='Search result ${search}' itemprop='name'/><meta content='Search result ${search}' itemprop='description'/>
+						<div class='module'>
+							<div class='content right full'><h1 class='heading-archive'>Search results for ${search}</h1>${output}</div>
+							<div class='pagination'><ul class='pagination'>${paginationContent}</ul></div>
+						</div>
+					`;
+
+				
+				}
+				
+				else if (tvid &amp;&amp; !season &amp;&amp; !episode) {
+					const seasonDetails = data.season_details || [];
+					let seasonContent = &#39;&#39;;
+
+					seasonDetails.forEach((season) =&gt; {
+						seasonContent += `
+						<article class='item'>    
+								<div class='poster' style='height:30%;top:0;'><img alt='${season.name} Season ${season.season_number}' src='${season.poster_path}'/>
+                                    <div class='rating'><i class='fa fa-star'/> ${season.vote_average}</div>
+                                    <div class='mepo'> </div>
+                                    <a href='?tv=${tvid}&amp;season=${season.season_number}'>
+                                        <div class='see play3'/>
+                                    </a>
+                                </div>
+                                <div class='data' style='height:10%;top:0;'>
+                                    <h3><a href='?tv=${tvid}&amp;season=${season.season_number}'>${season.name} - ${season.episode_count} Eps</a></h3> <span>${season.air_date}</span>
+                                </div>
+                            </article>
+						
+					  `;
+					});
+
+					dataContainer.innerHTML = `<title>${data.dynamic_title} - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='Watch ${data.title} HD free TV Show - ${blogTitle}' name='description'/><meta content='Watch ${data.title} HD free TV Show - ${blogTitle}' itemprop='name'/><meta content='Watch ${data.title} HD free TV Show - ${blogTitle}' itemprop='description'/><div class='module'>
+							<div class='content right full'>
+								<h1 class='Featured'>${data.title} - ${data.numseasons} Seasons</h1>
+								<div class='animation-2 items full arch'> 
+									${seasonContent}
+								</div>
+							</div>
+						</div>`;
+
+				  }
+
+			else if (tvid &amp;&amp; season &amp;&amp; !episode) {
+				  console.log(&#39;Data lengkap:&#39;, data);
+
+				  const episodeDetails = data.episode_details || [];
+				  let episodeContent = &#39;&#39;;
+
+				  if (episodeDetails.length &gt; 0) {
+					episodeDetails.forEach((episode) =&gt; {
+					  episodeContent += `
+						<article class='iteme' style='margin-bottom:5px'>
+						  <div class='posterm' style='height:10%;top:0;'>
+							<img alt='${episode.name} - Season ${episode.season_number} Episode ${episode.episode_number}' src='${episode.still_path}'/>
+							<div class='rating'><i class='fa fa-star'/> ${episode.vote_average}</div>
+							<div class='mepo'/>
+							<a href='?tv=${tvid}&amp;season=${episode.season_number}&amp;episode=${episode.episode_number}'>
+							  <div class='see play3'/>
+							</a>
+						  </div>
+						  <div class='data' style='height:5%;top:0;'>
+							<h3><a href='?tv=${tvid}&amp;season=${episode.season_number}&amp;episode=${episode.episode_number}'>
+							  ${episode.name} - S${episode.season_number}E${episode.episode_number}
+							</a></h3>
+							<span>${episode.air_date}</span>
+						  </div>
+						</article>
+					  `;
+					});
+				  } else {
+					episodeContent = `<p>Tidak ada episode untuk ditampilkan.</p>`;
+				  }
+
+				  dataContainer.innerHTML = `<title>${data.dynamic_title} Season ${season} - HD free TV Show | ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='${data.dynamic_title} - ${blogTitle}' name='description'/><meta content='${data.dynamic_title} - ${blogTitle}' itemprop='name'/><meta content='${data.dynamic_title} - ${blogTitle}' itemprop='description'/>
+					<div class='module'>
+					  <div class='content right full'>
+						<h1 class='Featured'>${data.titleep} - ${data.last_episode} EPISODES</h1>
+						<div class='animation-2 items full arch'>
+							${episodeContent}
+						</div>
+					  </div>
+					</div>
+				  `;
+				}
+				
+			else if (tvid &amp;&amp; season &amp;&amp; episode) {
+					
+					Promise.all([
+						fetch(`${apiKey}?type=tv/airing_today&amp;page=1`).then(res =&gt; res.json()),
+					  ])
+						.then(([tvData]) =&gt; {
+						  const airingToday = tvData.results
+							.map(tvShow =&gt; `
+							<article class='item'>
+                                <div class='poster' style='height:30%;top:0;'><img alt='${tvShow.title}' src='https://image.tmdb.org/t/p/w185${tvShow.poster}'/>
+                                    <div class='rating'><i class='fa fa-star'/> ${tvShow.vote}</div>
+                                    <div class='mepo'> </div>
+                                    <a href='?tv=${tvShow.id}'>
+                                        <div class='see play3'/>
+                                    </a>
+                                </div>
+                                <div class='data' style='height:10%;top:0;'>
+                                    <h3><a href='?tv=${tvShow.id}'>${tvShow.title}</a></h3> <span>${tvShow.air_date}</span>
+                                </div>
+                            </article> 
+							`)
+							.join(&#39;&#39;);
+						
+						const seasonDetails = data.season_details || [];
+						let seasonContent = &#39;&#39;;
+
+						seasonDetails.forEach((season) =&gt; {
+							seasonContent += `
+							<article class='item' style='margin-bottom:5px'>
+								<div class='poster' style='height:30%;top:0;'><img alt='${season.name}' src='${season.poster_path}'/>
+									<div class='rating'>Episodes : ${season.episode_count}</div>
+									<div class='mepo'> </div>
+										<a href='?tv=${tvid}&amp;season=${season.season_number}'>
+											<div class='see play3'/>
+										</a>
+									</div>
+									<div class='data' style='height:5%;top:0;'>
+										<h3><a href='?tv=${tvid}&amp;season=${season.season_number}'>${season.name}</a></h3> <span>${season.air_date}</span>
+									</div>
+							</article> 
+						  `;
+						});
+						
+						const episodeDetails = data.episode_details || [];
+						let episodeContent = &#39;&#39;;
+						
+						episodeDetails.forEach((episode) =&gt; {
+							  episodeContent += `
+								<article class='iteme' style='margin-bottom:5px'>
+									<div class='posterm' style='height:10%;top:0;'><img alt='${episode.name}' src='${episode.still_path}'/>
+										<div class='rating'><i class='fa fa-star'/> ${episode.vote_average}</div>
+										<div class='mepo'> </div>
+										<a href='?tv=${tvid}&amp;season=${episode.season_number}&amp;episode=${episode.episode_number}'>
+											<div class='see play3'/>
+										</a>
+									</div>
+									<div class='data' style='height:5%;top:0;'>
+										<h3><a href='?tv=${tvid}&amp;season=${episode.season_number}&amp;episode=${episode.episode_number}'>Episode ${episode.episode_number}</a></h3>
+										<span>${episode.air_date}</span>
+									</div>
+								</article> 
+							  `;
+							});
+						
+					dataContainer.innerHTML = `<title>${data.dynamic_title} Season ${season} Episode ${episode} - HD free TV Show | ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='${data.dynamic_title} - ${blogTitle}' name='description'/><meta content='${data.dynamic_title} - ${blogTitle}' itemprop='name'/><meta content='${data.dynamic_title} - ${blogTitle}' itemprop='description'/>
+							<div class='module'>
+								<div class='content'>
+								
+									<div class='video-info-left'>
+									
+										<div class='post-entry'>
+											<div class='content-more-js' id='rmjs-1'>
+													<div class='watch_play'>
+														<div class='play-video'>
+															 <iframe allowfullscreen='true' frameborder='0' id='player' marginheight='0' marginwidth='0' scrolling='no' src='${data.video}'/>
+														</div>
+														<div class='clr'/>
+													</div>
+													<div class='dst'>
+															<a data-src='https://www.youtube.com/embed/${data.trailers}' href='javascript:;' id='trailer' title='${data.title} trailer'><i class='fas fa-play-circle'/> Watch Trailer</a>
+															<a id='loading' style='display:none'>Loading...</a>
+															<a data-src='${data.video}' href='javascript:;' id='watchm' style='display:none' title='${data.title} watch now'><i class='fas fa-play-circle'/> Watch Episode</a>
+															<a data-src='' href='javascript:;' id='torrent' onclick='window.open(&apos;${data.download_torrent}&apos;, &apos;_blank&apos;)' title='Download torrent ${data.title}'><i class='fas fa-download'/> Download torrent</a>
+															<a data-src='' href='javascript:;' id='subtitle' onclick='window.open(&apos;${data.download_subtitle}&apos;, &apos;_blank&apos;)' title='Download Subtitle ${data.title}'><i class='fas fa-download'/> Download subtitle</a>
+													</div>
+													<div class='clr'/>
+													<div class='rgt'>
+														<div class='rgtp'>
+															<h1>${data.titleplayer}</h1>
+															<p>${data.air_date}</p>
+															<ul class='genre'>${data.genres}</ul>
+															<p>${data.overview}</p>
+														</div>
+													</div>
+											</div>
+										</div>
+										
+										<h2 class='widget-title-se'>Episodes List:</h2>
+										<div class='animation-2 items full'>
+											${episodeContent}
+										</div>
+										<div class='clr'/>
+										<h2 class='widget-title-se' id='seasons'>Seasons List:</h2>
+										<div class='animation-2 items bbt'>
+											${seasonContent}
+										</div>
+										<div class='clr'/>
+									</div>
+									
+									<div class='video-info-right'>
+										<h2 class='widget-title'>Trending TV shows</h2>
+										<div class='animation-2 items'>${airingToday}</div>
+									</div>
+								</div>		
+								
+								<div class='clearfix'/>
+								<div class='breadcrumb'>
+									<ul>
+										<li><a href=''>Home</a></li>
+										<li><a href=''>TV Shows</a></li>
+										<li><a href='?tv=${data.id}'>${data.names}</a></li>
+										<li>Season ${data.season} Episode ${data.episode}</li>
+									</ul>
+								</div>
+							</div>`;
+							
+							var trailerButton = document.getElementById(&#39;trailer&#39;);
+							var watchMovieButton = document.getElementById(&#39;watchm&#39;);
+							var player = document.getElementById(&#39;player&#39;);
+
+							if (trailerButton) {
+								trailerButton.addEventListener(&#39;click&#39;, function() {
+									var videoSrc = this.getAttribute(&#39;data-src&#39;);
+									if (player) {
+										player.setAttribute(&#39;src&#39;, videoSrc); 
+										console.log(&#39;Trailer video source set to:&#39;, videoSrc);
+									}
+									
+									trailerButton.style.display = &#39;none&#39;;
+									watchMovieButton.style.display = &#39;inline-block&#39;;
+								});
+							}
+
+							if (watchMovieButton) {
+								watchMovieButton.addEventListener(&#39;click&#39;, function() {
+									var videoSrc = this.getAttribute(&#39;data-src&#39;);
+									if (player) {
+										player.setAttribute(&#39;src&#39;, videoSrc); 
+										console.log(&#39;Movie video source set to:&#39;, videoSrc);
+									}
+						
+									watchMovieButton.style.display = &#39;none&#39;;
+									trailerButton.style.display = &#39;inline-block&#39;;
+									
+								});
+							}
+						
+						})
+						.catch(error =&gt; console.error(&#39;Error fetching TV list:&#39;, error));
+	
+
+				} else if (type) {
+					console.log(&#39;Fetched Data:&#39;, data);
+					fetch(apiUrl)
+					.then((response) =&gt; response.json())
+					.then((data) =&gt; {
+					  const results = data.results || [];
+					  let categoryContent = &#39;&#39;;
+					  const currentPage = parseInt(page) || 1;
+					  const totalPages = data.total_pages || 1;
+
+					  
+					  if (results.length &gt; 0) {
+						results.forEach((item) =&gt; {
+						  const title = item.title || item.titlemov || &#39;No Title&#39;;
+						  const poster = item.poster
+							? `https://image.tmdb.org/t/p/w500${item.poster}`
+							: &#39;https://i.imgur.com/xD5fD0N.png&#39;;
+						  const releaseDate = item.release || item.air_date || &#39; &#39;;
+						  const vote = item.vote || &#39;No rating&#39;;
+						  const overview = item.overview || &#39;No description available.&#39;;
+
+						  categoryContent += `
+							<article class='item' style='margin-bottom:5px'>
+								 <div class='poster' style='height:10%;top:0;'><img alt='${title}' src='${poster}'/>
+									<div class='rating'><i class='fa fa-star'/> ${vote}</div>
+									<div class='mepo'> </div>
+									<a href='${data.linked}${item.id}'>
+										<div class='see play3'/>
+									</a>
+								</div>
+								<div class='data' style='height:5%;top:0;'>
+									<h3><a href='${data.linked}${item.id}'>${title}</a></h3> <span>${releaseDate}</span>
+								</div>
+							</article>
+						  `;
+						});
+					  } else {
+						categoryContent = `<p>No items found for this category.</p>`;
+					  }
+	  
+						let paginationContent = &#39;&#39;;
+
+						if (currentPage &gt; 1) {
+						  paginationContent += `<li class='prev'><a href='?type=${type}&amp;page=${currentPage - 1}'>&lt; Previous</a></li>`;
+						}
+
+						for (let i = 1; i &lt;= Math.min(totalPages, 5); i++) {
+						  const isActive = i === currentPage ? &#39;active&#39; : &#39;&#39;;
+						  paginationContent += `<li class='${isActive}'><a href='?type=${type}&amp;page=${i}'>${i}</a></li>`;
+						}
+
+						if (currentPage &lt; totalPages) {
+						  paginationContent += `<li class='next'><a href='?type=${type}&amp;page=${currentPage + 1}'>Next &gt;</a></li>`;
+						}
+						paginationContent += &#39;&#39;
+	  
+					  dataContainer.innerHTML = `
+							<title>${data.titleweb} - ${blogTitle}</title><meta content='index, follow' name='robots'/><meta content='${data.titleweb} - ${blogTitle}' name='description'/><meta content='${data.titleweb} - ${blogTitle}' itemprop='name'/><meta content='${data.titleweb} - ${blogTitle}' itemprop='description'/>
+							<div class='module'>
+								<div class='content right full'>
+									<h1 class='Featured'>${data.head}</h1>
+									<div class='animation-2 items full arch'>                            
+											${categoryContent}
+									</div>
+									<div class='pagination'>
+											<ul class='pagination'>
+												${paginationContent}
+											</ul>
+									</div>
+								</div>
+							</div>
+							<div class='clearfix'/><!--breadcrumbs-start-->
+							<div class='breadcrumb'>
+								<ul>
+									<li><a href='/'>Home</a></li>
+									<li>${data.head}</li>
+								</ul>
+							</div>
+					  `;
+					})
+					.catch((error) =&gt; console.error(&#39;Error fetching data:&#39;, error));
+					
+				 }
+				})
+				.catch(error =&gt; {
+				  dataContainer.innerHTML = `
+					<center style='margin-top:20%;'><h1>ERROR: ${error.message}</h1></center>
+				  `;
+				});
+			};
+			</script>
+			<div id='data-container'>
+						<header class='responsive'>
+							<div class='nav' id='menubtn'><a class='aresp nav-resp'><i class='fa fa-bars'/></a></div>
+							<div class='search' id='searchbtn'><a class='aresp search-resp'><i class='fa fa-search'/></a></div>
+							<div class='logo'>
+								<a href='/'><img alt='Miroru Tv logo' src='https://ardev95.github.io/movies/img/logo.png'/></a>
+							</div>
+						</header>
+						
+						<div class='search_responsive'>
+							<form class='form-resp-ab' id='form-search-resp'>
+								<input class='footer_search_input' id='search-input' onkeydown='handleSearch(event)' placeholder='Search...' type='text'/>
+							</form>
+						</div>
+						
+
+						<script>
+						function handleSearch(event) {
+							if (event.key === &quot;Enter&quot;) {
+								event.preventDefault();
+								var query = document.getElementById(&quot;search-input&quot;).value;
+								if (query) {
+									window.location.href = &quot;/?search=&quot; + encodeURIComponent(query);
+								}
+							}
+						}
+						</script>
+						<div class='menuresp' id='arch-menu'>
+							<div class='menu'>
+								<ul class='resp'>
+									<li>
+										<a href='/'>
+											<i class='fas fa-home'/><div class='mvs'>Home</div>
+										</a>
+									</li>
+									<li>
+										<a href='?type=movies'>
+											<i class='fas fa-film'/><div class='mvs'>Movies</div>
+										</a>
+									</li>
+									<li>
+										<a href='?type=trending_movies'><i class='fas fa-chart-line'/><div class='mvs'>Trending Movies</div></a></li>
+									<li>
+										<a href='?type=top_rated_movies'>
+											<i class='fas fa-star'/><div class='mvs'>Top Rated Movies</div>
+										</a>
+									</li>
+									<li>
+										<a href='?type=tvshow'>
+											<i class='fas fa-tv'/><div class='mvs'>TV Shows</div>
+										</a>
+									</li>
+									<li>
+										<a href='?type=trending_tv'>
+											<i class='fas fa-chart-line'/><div class='mvs'>Trending TV Shows</div>
+										</a>
+									</li>
+									<li>
+										<a href='?type=top_rated_tv'>
+											<i class='fas fa-star'/><div class='mvs'>Top Rated TV Shows</div>
+										</a>
+									</li>
+									<li>
+										<a href='https://playerwe.xyz'>
+											<i class='fas fa-link'/><div class='mvs'>Auto Embed Movies</div>
+										</a>
+									</li>
+									<li>
+										<a href='https://playerwe.xyz'>
+											<i class='fas fa-link'/><div class='mvs'>Auto Embed TV Shows</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						
+						<div id='container'><div id='loading-spinner'/></div>
+
+						<footer class='main'>
+							<div class='fbox'>
+								<div class='fcmpbox'>
+									<div class='copy'>&#169; <script>document.write(new Date().getFullYear());</script> <data:blog.title/></div><span class='top-page'><a onclick='window.scrollTo({top: 0, behavior: &quot;smooth&quot;});'><i class='fa fa-angle-up'/></a></span>
+									<div class='fmenu'>
+										<ul class='menu' id='menu-footer-manu'>
+											<li><a href='/'>Home</a></li>
+											<li><a href='?p=dmca'>DMCA</a></li>
+											<li><a href='?p=privacy'>Privacy Policy</a></li>
+											<li><a href='?p=terms'>Terms and Conditions</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</footer>
+					</div>
+					<script src='https://ardev95.github.io/movies/js/main.js' type='text/javascript'/>
+		
+	</body>
+</html>
